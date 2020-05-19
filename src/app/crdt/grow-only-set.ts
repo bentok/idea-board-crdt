@@ -1,14 +1,14 @@
-type IAddRes<T> = (item: T) => T[];
-type IAdd = <T>(items: T[]) => IAddRes<T>;
-const add: IAdd = items => item => [...items, ...[item]];
+type A<T> = (item: T) => T[];
+type A2 = <T>(items: T[]) => A<T>;
+const add: A2 = items => item => [...items, ...[item]];
 
-type IMergeRes<T> = (incomingSet: T[]) => T[];
-type IMerge = <T>(set: T[]) => IMergeRes<any>;
-const merge: IMerge = set => incomingSet => [
+type M<T> = (incomingSet: T[]) => T[];
+type M2 = <T>(set: T[]) => M<any>;
+const merge: M2 = set => incomingSet => [
   ...set,
   ...incomingSet.filter(item => !set.includes(item)),
 ];
 
-type IGrowOnlySet = <T>(items?: T[]) => [T[], IAddRes<T>, IMergeRes<T>];
-export const growOnlySet: IGrowOnlySet = (items = []) =>
-  [items, add(items), merge(items)];
+type GrowOnlySet = <T>(items?: T[]) => [A<T>, M<T>];
+export const growOnlySet: GrowOnlySet = (items = []) =>
+  [add(items), merge(items)];

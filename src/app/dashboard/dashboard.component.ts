@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {growOnlySet} from "../crdt/grow-only-set";
+import { growOnlySet } from '../crdt/grow-only-set';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,6 +8,8 @@ import {growOnlySet} from "../crdt/grow-only-set";
 })
 export class DashboardComponent {
   ngOnInit() {
-    console.log(growOnlySet<number>());
+    globalThis.localStorage.setItem('items', JSON.stringify({ hello: 'world' }));
+    const foo = globalThis.localStorage.getItem('items');
+    console.log(foo);
   }
 }
