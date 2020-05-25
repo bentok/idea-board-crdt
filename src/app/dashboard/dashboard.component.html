@@ -1,5 +1,32 @@
-<div class="container">
-    <div class="notification">
-        Hello World
+<section class="hero is-info">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Idea Board
+            </h1>
+            <h2 class="subtitle">
+                Web app using local storage and conflict-free replicated data type
+            </h2>
+        </div>
     </div>
+</section>
+<div class="container is-fluid" [formGroup]="ideaBoard">
+    <div formArrayName="ideas" *ngFor="let idea of ideaBoard.controls.ideas?.value; let i = index" class="idea">
+        <ng-container [formGroupName]="i">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="name">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                    <textarea class="textarea" type="text" formControlName="description"></textarea>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <button class="button is-link">Add</button>
 </div>
