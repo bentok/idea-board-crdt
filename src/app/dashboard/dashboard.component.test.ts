@@ -1,4 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
+import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from '@angular/router/testing';
 import { DashboardComponent } from './dashboard.component';
 
@@ -6,12 +7,15 @@ describe('DashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        ReactiveFormsModule,
       ],
       declarations: [
-        DashboardComponent
+        DashboardComponent,
       ],
-    }).compileComponents();
+    })
+      .overrideTemplate(DashboardComponent, '<div></div>')
+      .compileComponents();
   }));
 
   it('should create', () => {

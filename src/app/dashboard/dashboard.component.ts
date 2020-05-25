@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
+import Peer from 'peerjs';
+import * as uuid from 'uuid';
 
 import { growOnlySet } from '../crdt/grow-only-set';
 
@@ -42,6 +44,8 @@ export class DashboardComponent implements OnDestroy, OnInit {
         (value) => {
           globalThis.localStorage.setItem('items', JSON.stringify(value))
         });
+    
+    console.log(uuid.v4())
   }
   
   ngOnDestroy() {
