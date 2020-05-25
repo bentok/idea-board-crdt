@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder } from "@angular/forms";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder } from "@angular/forms";
+import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
+
 import { growOnlySet } from '../crdt/grow-only-set';
 
 const idea = {
@@ -12,7 +15,7 @@ const idea = {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy, OnInit {
   ideaBoard = this.fb.group({
     ideas: this.fb.array([
       this.fb.group({
@@ -21,16 +24,36 @@ export class DashboardComponent {
       }),
     ]),
   });
+  destroy$ = new Subject();
   
   constructor(
     private fb: FormBuilder,
   ) {}
 
   ngOnInit() {
-    const items: any[] = [];
-    const [add, merge] = growOnlySet(items);
-    console.log(merge(['hey']));
-    const foo = globalThis.localStorage.getItem('items');
+    const storageValue = globalThis.localStorage.getItem('items');
+    const parsedValue = !!storageValue ? JSON.parse(storageValue) : [];
+    this.ideaBoard.patchValue(parsedValue);
+    this.ideaBoard.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe(
+        (value) => {
+          globalThis.localStorage.setItem('items', JSON.stringify(value))
+        });
+  }
+  
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
+  }
+  
+  handleIncomingChange() {
+    // const items: any[] = [];
+    // const [add, merge] = growOnlySet(items);
+    // console.log(merge(['hey']));
+    // const foo = globalThis.localStorage.getItem('items');
   }
 
   addIdea() {
@@ -39,6 +62,10 @@ export class DashboardComponent {
       name: '',
       description: '',
     }));
+  }
+
+  trackByFn(index: number) {
+    return index;
   }
 
 }
