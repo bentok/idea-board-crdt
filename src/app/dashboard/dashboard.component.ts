@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from "@angular/forms";
-import { Subject } from "rxjs";
+import { FormArray, FormBuilder } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import * as uuid from 'uuid';
-
 import { growOnlySet } from '../crdt/grow-only-set';
 
 const idea = {
@@ -50,11 +48,9 @@ export class DashboardComponent implements OnDestroy, OnInit {
     this.destroy$.unsubscribe();
   }
   
-  handleIncomingChange() {
-    // const items: any[] = [];
-    // const [add, merge] = growOnlySet(items);
-    // console.log(merge(['hey']));
-    // const foo = globalThis.localStorage.getItem('items');
+  handleIncomingChange(incoming) {
+    const items = [];
+    const [add, merge] = growOnlySet(incoming);
   }
 
   addIdea() {
@@ -63,10 +59,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
       name: '',
       description: '',
     }));
-  }
+  } 
 
-  trackByFn(index: number) {
-    return index;
-  }
-
+  trackByFn: (i: number) => number = i => i;
 }
