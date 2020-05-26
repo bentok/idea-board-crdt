@@ -11,6 +11,7 @@
     </div>
 </section>
 <div class="container is-fluid" [formGroup]="ideaBoard">
+    <app-peer-id></app-peer-id>
     <div formArrayName="ideas" *ngFor="let idea of ideaBoard.controls.ideas?.value; let i = index; trackBy: trackByFn" class="idea">
         <ng-container [formGroupName]="i">
             <div class="field">

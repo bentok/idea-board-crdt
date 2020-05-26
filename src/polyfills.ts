@@ -61,3 +61,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// For node dependencies that use global
+(window as any).global = window;
