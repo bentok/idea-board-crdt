@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class PeerIdComponent implements OnInit {
   peer$: Observable<any>;
-  
+
   constructor(
     private service: PeerService,
   ) { }

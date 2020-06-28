@@ -24,7 +24,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
     ]),
   });
   destroy$ = new Subject();
-  
+
   constructor(
     private fb: FormBuilder,
   ) {}
@@ -42,12 +42,12 @@ export class DashboardComponent implements OnDestroy, OnInit {
           globalThis.localStorage.setItem('items', JSON.stringify(value))
         });
   }
-  
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.unsubscribe();
   }
-  
+
   handleIncomingChange(incoming) {
     const items = [];
     const [add, merge] = growOnlySet(incoming);
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
       name: '',
       description: '',
     }));
-  } 
+  }
 
   trackByFn: (i: number) => number = i => i;
 }
